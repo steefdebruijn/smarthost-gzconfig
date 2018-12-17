@@ -1,0 +1,51 @@
+{
+  "alias": "roon",
+  "hostname": "roon",
+  "docker": true,
+  "brand": "lx",
+  "max_physical_memory": 1024,
+  "image_uuid": "steefdebruijn/docker-roonserver:latest",
+  "kernel_version": "3.18.0",
+  "nics": [
+    {
+      "nic_tag": "admin",
+      "gateway": "192.168.1.1",
+      "ip": "192.168.1.3",
+      "netmask": "255.255.255.0"
+    }
+  ],
+  "resolvers": [
+    "8.8.8.8",
+    "8.8.4.4"
+  ],
+  "filesystems": [
+    {
+      "source": "/zones/roon-app",
+      "target": "/app",
+      "type": "lofs"
+    },
+    {
+      "source": "/zones/roon-data",
+      "target": "/data",
+      "type": "lofs"
+    },
+    {
+      "source": "/zonedata/roon-backups",
+      "target": "/backups",
+      "type": "lofs"
+    },
+    {
+      "source": "/zonedata/media/music",
+      "target": "/music",
+      "type": "lofs"
+    }
+  ],
+  "internal_metadata": {
+    "docker:entrypoint": "$docker_entrypoint",
+    "docker:env": "$docker_env",
+    "docker:workingdir": "$docker_wd",
+    "docker:workdir": "$docker_wd",
+    "docker:open_stdin": "true",
+    "docker:tty": "true"
+  }
+}
