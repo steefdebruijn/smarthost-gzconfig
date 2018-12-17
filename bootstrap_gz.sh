@@ -3,8 +3,6 @@
 function hostinfo {
     echo Bootstrapping Global Zone configuration ...
     echo Host is $(hostname)
-    export networkdevice=$(dladm show-phys -o device -p)
-    echo IP address is $(ipadm show-addr ${networkdevice}/ -o addr |tail -1|sed -e 's|/24||')
     export defaultgw=$(netstat -rn -f flags:+G -f af:inet | tail -1 | awk '{print $2;}')
     echo Default gateway is $defaultgw
 }
