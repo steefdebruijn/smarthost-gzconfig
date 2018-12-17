@@ -1,0 +1,41 @@
+{
+  "alias": "plex",
+  "hostname": "plex",
+  "docker": true,
+  "brand": "lx",
+  "max_physical_memory": 1024,
+  "image_uuid": "plexinc/pms-docker:plexpass",
+  "kernel_version": "3.18.0",
+  "nics": [
+    {
+      "nic_tag": "admin",
+      "gateway": "192.168.1.1",
+      "ip": "192.168.1.4",
+      "netmask": "255.255.255.0"
+    }
+  ],
+  "resolvers": [
+    "8.8.8.8",
+    "8.8.4.4"
+  ],
+  "filesystems": [
+    {
+      "source": "/zones/plex-app",
+      "target": "/config",
+      "type": "lofs"
+    },
+    {
+      "source": "/zonedata/media",
+      "target": "/media",
+      "type": "lofs"
+    }
+  ],
+  "internal_metadata": {
+    "docker:entrypoint": "$docker_entrypoint",
+    "docker:env": "$docker_env",
+    "docker:workingdir": "$docker_wd",
+    "docker:workdir": "$docker_wd",
+    "docker:open_stdin": "true",
+    "docker:tty": "true"
+  }
+}
