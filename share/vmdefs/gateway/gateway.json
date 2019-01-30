@@ -1,0 +1,30 @@
+{
+  "alias": "gateway",
+  "hostname": "gateway",
+  "brand": "joyent",
+  "quota": 10,
+  "max_physical_memory": 1024,
+  "image_uuid": "minimal-64-lts",
+  "default_gateway": "192.168.1.1",
+  "resolvers": [
+    "8.8.8.8",
+    "8.8.4.4"
+  ],
+  "nics": [
+    {
+      "nic_tag": "admin",
+      "ip": "192.168.1.5",
+      "netmask": "255.255.255.0",
+      "allow_ip_spoofing": true,
+      "gateway": "192.168.1.1",
+      "primary": true
+    },
+    {
+      "nic_tag": "stub0",
+      "gateway": "10.0.0.1",
+      "ip": "10.0.0.1",
+      "netmask": "255.255.255.0",
+      "allow_ip_spoofing": true
+    }
+  ]
+}

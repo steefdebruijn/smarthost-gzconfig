@@ -67,6 +67,7 @@ EOF
 	echo Installing packages...
 	zlogin $zone "pkgin -fy upgrade-all"
 	cat ${vmdefs}/${1}/packages | while read p; do
+	    echo "  - $p"
 	    zlogin $zone "pkgin -y install $p"
 	done
     fi
