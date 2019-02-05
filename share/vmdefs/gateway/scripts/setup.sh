@@ -28,6 +28,10 @@ events {
 
 
 http {
+    server_tokens off;
+    more_clear_headers Server;
+    more_set_headers 'Server: ankorboet';
+
     include       /opt/local/etc/nginx/mime.types;
     default_type  application/octet-stream;
 
