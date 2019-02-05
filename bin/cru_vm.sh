@@ -50,7 +50,7 @@ function install_zone {
 		done < <(cat ${vmdefs}/${1}/env)
 	    fi
 	    docker_entrypoint=$(echo $docker_entrypoint | sed -e 's|"|\\"|g')
-	    docker_cmd=$(echo $docker_cmd | sed -e 's|"|\\"|g') # todo: \t not working nulls should be omitted from json
+	    docker_cmd=$(echo $docker_cmd | sed -e 's|"|\\"|g')
 	    docker_env=$(echo $docker_env | sed -e 's|"|\\"|g')
 	else
             echo Configuring ${1} as OS zone ...
@@ -66,10 +66,7 @@ EOF
     if test -f ${vmdefs}/${1}/packages; then
 	echo Installing packages...
 	zlogin $zone "pkgin -fy upgrade-all"
-	cat ${vmdefs}/${1}/packages | while read p; do
-	    echo "  - $p"
-	    zlogin $zone "pkgin -y install $p"
-	done
+	cat ${vmdefs}/${1}/packages | zlogin $zone "xargs pkgin -y install"
     fi
     if test -d ${vmdefs}/${1}/scripts; then
 	echo Installing scripts...
@@ -95,6 +92,7 @@ EOF
 	    echo ERROR: port forwarding not possible on non-stub NICs
 	    exit 1
 	fi
+	# FIXME: this loop does not work after first line
 	cat ${vmdefs}/${1}/ports | while read host port; do
 	    zlogin $gateway "scripts/add-virtual-host.sh $host $ip $port"
 	done
