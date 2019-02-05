@@ -1,0 +1,42 @@
+{
+  "alias": "minio",
+  "hostname": "minio",
+  "docker": true,
+  "brand": "lx",
+  "max_physical_memory": 512,
+  "image_uuid": "minio/minio:latest",
+  "kernel_version": "3.18.0",
+  "nics": [
+    {
+      "nic_tag": "stub0",
+      "gateway": "10.0.0.1",
+      "ip": "10.0.0.101",
+      "netmask": "255.255.255.0"
+    }
+  ],
+  "resolvers": [
+    "8.8.8.8",
+    "8.8.4.4"
+  ],
+  "filesystems": [
+    {
+      "source": "/zones/minio-app",
+      "target": "/root",
+      "type": "lofs"
+    },
+    {
+      "source": "/zonedata/minio-data",
+      "target": "/data",
+      "type": "lofs"
+    }
+  ],
+  "internal_metadata": {
+    "docker:entrypoint": "$docker_entrypoint",
+    "docker:cmd": "[\"server\", \"/data\"]",
+    "docker:env": "$docker_env",
+    "docker:workingdir": "$docker_wd",
+    "docker:workdir": "$docker_wd",
+    "docker:open_stdin": "true",
+    "docker:tty": "true"
+  }
+}
