@@ -41,7 +41,13 @@ server {
 	client_max_body_size 0;
 	access_log /var/log/nginx/${1}.log;
 	error_log  /var/log/nginx/${1}.err;
-	return 301 https://\$host\$request_uri;
+	location ^~ /.well-known/acme-challenge/ {
+		alias /opt/local/www/acme/;
+		try_files \$uri =404;
+	}
+	location / {
+		return 301 https://\$host\$request_uri;
+	}
 }
 server {
 	server_name ${1};
@@ -59,13 +65,8 @@ server {
 	ssl_session_tickets off;
 	ssl_dhparam         /opt/local/etc/nginx/certs/${1}.dhparam.pem;
 	ssl_certificate_key /opt/local/etc/nginx/certs/${1}.domain.key;
-	ssl_certificate     /opt/local/etc/nginx/certs/${1}.chain.pem;
+	ssl_certificate     /opt/local/etc/nginx/certs/${1}.domain.crt;
 	add_header Strict-Transport-Security "max-age=31536000";
-	location ^~ /.well-known/acme-challenge/ {
-		alias /opt/local/www/acme/;
-		try_files \$uri =404;
-		break;
-	}
 	location / {
 		proxy_pass http://${1};
 	}
