@@ -75,4 +75,7 @@ __eof
 
 ln -s /opt/local/etc/nginx/sites-available/${1}.nginx /opt/local/etc/nginx/sites-enabled/${1}.nginx
 
+# Initial SSL setup
+/root/scripts/domain-renew.sh ${1}
+# And now get a certificate for real
 /root/scripts/domain-renew.sh ${1}
